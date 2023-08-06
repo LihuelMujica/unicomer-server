@@ -1,6 +1,7 @@
 package com.techforb.unicomer.service.impl;
 
 import com.techforb.unicomer.Exception.ResourceAlreadyExistsException;
+import com.techforb.unicomer.Exception.ResourceNotFoundException;
 import com.techforb.unicomer.dto.UserCreateDTO;
 import com.techforb.unicomer.dto.UserDTO;
 import com.techforb.unicomer.mapper.UserMapper;
@@ -8,6 +9,7 @@ import com.techforb.unicomer.model.DniType;
 import com.techforb.unicomer.model.Role;
 import com.techforb.unicomer.model.User;
 import com.techforb.unicomer.repository.UserRepository;
+import com.techforb.unicomer.service.CardService;
 import com.techforb.unicomer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,20 +23,22 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final CardService cardService;
 
     private final PasswordEncoder passwordEncoder;
 
     private final UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, CardService cardService, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.cardService = cardService;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
     }
 
     @Override
-    public UserDTO createUser(UserCreateDTO userCreateDTO) throws ResourceAlreadyExistsException {
+    public UserDTO createUser(UserCreateDTO userCreateDTO) throws ResourceAlreadyExistsException, ResourceNotFoundException {
          if(
                  userRepository.existsByDniAndDniType(userCreateDTO.getDni(), userCreateDTO.getDniType()) ||
                  userRepository.existsByEmail(userCreateDTO.getEmail()))
@@ -45,7 +49,10 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userCreateDTOToUser(userCreateDTO);
         user.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         user.setRole(Role.USER);
-        return userMapper.userToUserDTO(userRepository.save(user));
+        UserDTO savedUser = userMapper.userToUserDTO(userRepository.save(user));
+        //Generate card for user
+        cardService.createCard(savedUser.getId());
+        return savedUser;
     }
 
     @Override
