@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity(name = "users")
 @Builder
 @NoArgsConstructor
@@ -20,6 +22,8 @@ public class User {
     @Column(name = "dniType")
     private DniType dniType;
     private String dni;
+    //account balance
+    private BigDecimal balance;
 
     private String name;
 

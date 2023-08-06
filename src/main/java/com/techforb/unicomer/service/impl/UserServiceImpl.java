@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -49,6 +50,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.userCreateDTOToUser(userCreateDTO);
         user.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
         user.setRole(Role.USER);
+        user.setBalance(new BigDecimal(0));
         UserDTO savedUser = userMapper.userToUserDTO(userRepository.save(user));
         //Generate card for user
         cardService.createCard(savedUser.getId());

@@ -5,6 +5,8 @@ import com.techforb.unicomer.model.Role;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,4 +23,5 @@ public class UserDTO {
     @Email
     private String email;
     private Role role;
+    private BigDecimal balance;
 }
