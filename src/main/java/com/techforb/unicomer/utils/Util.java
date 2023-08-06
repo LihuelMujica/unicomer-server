@@ -5,6 +5,7 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class Util {
@@ -37,5 +38,45 @@ public class Util {
     public static void mergeObjects(Object src, Object target) {
         BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
     }
+
+    /**
+     * Generates a random (fictional) credit card number.
+     * The generated credit card number is a 16-digit number.
+     * @return Randomly generated credit card number.
+     */
+    public static String generateCreditCardNumber() {
+        Random random = new Random();
+
+        StringBuilder sb = new StringBuilder();
+        int creditCardNumberLength = 16; // Number of digits in a valid credit card
+
+        for (int i = 0; i < creditCardNumberLength; i++) {
+            int digit = random.nextInt(10);
+            sb.append(digit);
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Generates a random (fictional) CVV (Card Verification Value).
+     * The generated CVV is a 3-digit number.
+     * @return Randomly generated CVV.
+     */
+    public static String generateCVV() {
+        Random random = new Random();
+
+        StringBuilder sb = new StringBuilder();
+        int cvvLength = 3; // CVV typically has 3 digits
+
+        for (int i = 0; i < cvvLength; i++) {
+            int digit = random.nextInt(10);
+            sb.append(digit);
+        }
+
+        return sb.toString();
+    }
+
+
 
 }
