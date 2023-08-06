@@ -1,6 +1,7 @@
 package com.techforb.unicomer.controller;
 
 import com.techforb.unicomer.Exception.ResourceAlreadyExistsException;
+import com.techforb.unicomer.Exception.ResourceNotFoundException;
 import com.techforb.unicomer.dto.UserCreateDTO;
 import com.techforb.unicomer.dto.UserDTO;
 import com.techforb.unicomer.service.UserService;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateDTO user) throws ResourceAlreadyExistsException {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserCreateDTO user) throws ResourceAlreadyExistsException, ResourceNotFoundException {
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 

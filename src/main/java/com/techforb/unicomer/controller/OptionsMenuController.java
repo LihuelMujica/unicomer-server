@@ -34,7 +34,7 @@ public class OptionsMenuController {
 
     @PostMapping
     public ResponseEntity<OptionMenu> addOptionMenu(@RequestBody OptionMenuCreateDTO optionMenu) throws ResourceAlreadyExistsException {
-        return ResponseEntity.ok(optionsMenuService.addOptionMenu(optionMenu));
+        return new ResponseEntity<>(optionsMenuService.addOptionMenu(optionMenu), org.springframework.http.HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
