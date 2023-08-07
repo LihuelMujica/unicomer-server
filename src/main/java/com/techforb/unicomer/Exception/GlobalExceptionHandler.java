@@ -16,4 +16,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> resourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler({InsufficientFundsException.class})
+    public ResponseEntity<String> insufficientFundsException(InsufficientFundsException ex) {
+        return ResponseEntity.status(HttpStatus.PAYMENT_REQUIRED).body(ex.getMessage());
+    }
 }

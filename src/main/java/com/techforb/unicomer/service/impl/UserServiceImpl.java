@@ -65,6 +65,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO getUserById(Integer id) throws ResourceNotFoundException {
+        return userRepository.findById(id)
+                .map(userMapper::userToUserDTO)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
+
+    @Override
     public UserDTO getUserByDniAndDniType(String dni, DniType dniType) {
         return userRepository.findByDniAndDniType(dni, dniType)
                 .map(userMapper::userToUserDTO)

@@ -24,4 +24,6 @@ public class UserDTO {
     private String email;
     private Role role;
     private BigDecimal balance;
+    private BigDecimal last30DaysIncome;
+    private BigDecimal last30DaysOutcome;
 }

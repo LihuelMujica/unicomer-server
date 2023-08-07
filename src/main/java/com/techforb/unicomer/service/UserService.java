@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
     UserDTO createUser(UserCreateDTO userCreateDTO) throws ResourceAlreadyExistsException, ResourceNotFoundException;
     UserDTO getUserByEmail(String email);
+    UserDTO getUserById(Integer id) throws ResourceNotFoundException;
 
     UserDTO getUserByDniAndDniType(String dni, DniType dniType);
 }

@@ -65,7 +65,10 @@ public class SecurityConfiguration {
             auth.requestMatchers(FREE_ENDPOINTS).permitAll();
             auth.requestMatchers(HttpMethod.GET,"/user").hasAuthority("SCOPE_ROLE_USER");
             auth.requestMatchers("/user/**").permitAll();
+            auth.requestMatchers("/transfer/**").permitAll();
             auth.requestMatchers("/auth/login/**").permitAll();
+            auth.requestMatchers("/optionmenu/**").permitAll();
+            auth.requestMatchers("/card/**").hasAuthority("SCOPE_ROLE_USER");
         });
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -73,7 +76,7 @@ public class SecurityConfiguration {
         http.csrf().disable();
         http.cors(corsCustomizer  -> corsCustomizer.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+            config.setAllowedOrigins(Collections.singletonList("http://unicomer.s3-website-us-east-1.amazonaws.com"));
             config.setAllowedMethods(Collections.singletonList("*"));
             config.setAllowCredentials(true);
             config.setAllowedHeaders(Collections.singletonList("*"));

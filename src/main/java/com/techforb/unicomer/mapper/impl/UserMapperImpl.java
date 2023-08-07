@@ -1,5 +1,6 @@
 package com.techforb.unicomer.mapper.impl;
 
+import com.techforb.unicomer.dto.PublicUserDTO;
 import com.techforb.unicomer.dto.UserCreateDTO;
 import com.techforb.unicomer.dto.UserDTO;
 import com.techforb.unicomer.mapper.UserMapper;
@@ -45,5 +46,13 @@ public class UserMapperImpl implements UserMapper {
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
         return user;
+    }
+
+    @Override
+    public PublicUserDTO userToPublicUserDTO(User user) {
+        PublicUserDTO publicUserDTO = new PublicUserDTO();
+        publicUserDTO.setId(user.getId());
+        publicUserDTO.setName(user.getName() + " " + user.getLastname());
+        return publicUserDTO;
     }
 }
